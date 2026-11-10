@@ -178,8 +178,11 @@ export default function HangerRail({
     a: 0,
   });
 
-  const [active, setActive] = useState(0);
   const activeRef = useRef(0);
+  // The caption only shows the garment under the cursor (-1 = none hovered).
+  const [hoverItem, setHoverItem] = useState(-1);
+  const [captionItem, setCaptionItem] = useState(0); // last hovered, kept while the caption fades out
+  const hoverRef = useRef(-1);
 
   const wasPaused = useRef(paused);
   useEffect(() => {
@@ -372,8 +375,13 @@ export default function HangerRail({
     }
     if (nearest !== activeRef.current) {
       activeRef.current = nearest;
-      setActive(nearest);
       onActiveChange?.(items[nearest], nearest);
+    }
+    const hovItem = hov >= 0 ? hov % items.length : -1;
+    if (hovItem !== hoverRef.current) {
+      hoverRef.current = hovItem;
+      setHoverItem(hovItem);
+      if (hovItem >= 0) setCaptionItem(hovItem);
     }
   });
 
@@ -448,7 +456,8 @@ export default function HangerRail({
     }
   };
 
-  const current = items[active];
+  const current = items[captionItem] ?? items[0];
+  const showCaption = hoverItem >= 0;
   const railPath = width ? `M0 ${railY(-half)} Q${half} ${railTop + sag * 2} ${width} ${railY(half)}` : "";
 
   return (
@@ -604,9 +613,9 @@ export default function HangerRail({
           key={current?.id}
           className={styles.info}
           initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={showCaption ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
           transition={{ duration: 0.25 }}
-          aria-live="polite"
+          aria-hidden={!showCaption}
         >
           <span className={styles.infoName}>{current?.name}</span>
           <span className={styles.infoMeta}>
