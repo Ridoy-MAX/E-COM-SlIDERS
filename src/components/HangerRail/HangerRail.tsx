@@ -80,11 +80,12 @@ type Props = {
 
 // ---- physics tuning ------------------------------------------------------
 const GRAVITY = 2600; // px/s²
-const DAMPING = 1.15; // 1/s – how fast swinging dies out
+const DAMPING = 2.6; // 1/s – how fast swinging dies out
 const TAG_LENGTH = 26; // px – the price tag is its own tiny pendulum
-const TAG_DAMPING = 2.2;
-const MAX_ANGLE = 0.55; // rad
-const ACCEL_GAIN = 0.6; // how strongly rail acceleration kicks the hangers
+const TAG_DAMPING = 4;
+const MAX_ANGLE = 0.3; // rad
+const ACCEL_GAIN = 0.3; // how strongly rail acceleration kicks the hangers
+const FLING = 0.15; // s – how far the rail coasts after a drag is let go
 const SUBSTEP = 1 / 240; // s
 const REVEAL_SPEED = 10; // 1/s – how quickly a hovered garment opens out to its front photo
 
@@ -421,7 +422,7 @@ export default function HangerRail({
     drag.current = null;
     if (d.moved) {
       const v = offset.getVelocity();
-      glideTo(snap(offset.get() + v * 0.3), v);
+      glideTo(snap(offset.get() + v * FLING), v);
       return;
     }
     // A tap on a garment brings it to the centre and reports the click.

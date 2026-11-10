@@ -56,7 +56,6 @@ export default function ShoeOrbit({ shoes, onViewDetails, onAddToBag }: Props) {
 
   const stageRef = useRef<HTMLDivElement>(null);
   const items = useRef<(HTMLButtonElement | null)[]>([]);
-  const rulerRef = useRef<HTMLDivElement>(null);
   const [box, setBox] = useState({ w: 0, h: 0 });
 
   // Continuous position along the orbit (in shoes). Its rounded value is the active shoe.
@@ -116,7 +115,6 @@ export default function ShoeOrbit({ shoes, onViewDetails, onAddToBag }: Props) {
       el.style.pointerEvents = opacity < 0.3 ? "none" : "auto";
       el.tabIndex = ad < 0.5 ? 0 : -1;
     }
-    if (rulerRef.current) rulerRef.current.style.transform = `translateX(${-c * 24}px)`;
     const a = mod(Math.round(c), n);
     if (a !== active) {
       setDir(a === mod(active + 1, n) ? 1 : a === mod(active - 1, n) ? -1 : Math.sign(a - active) || 1);
@@ -275,10 +273,6 @@ export default function ShoeOrbit({ shoes, onViewDetails, onAddToBag }: Props) {
 
       {/* Scrubber, bottom centre */}
       <div className={styles.scrub}>
-        <div className={styles.rulerWin} aria-hidden>
-          <div ref={rulerRef} className={styles.ruler} />
-          <span className={styles.marker} />
-        </div>
         <div className={styles.scrubRow}>
           <button type="button" className={styles.arrow} onClick={() => step(-1)} aria-label="Previous shoe">
             ←
