@@ -25,23 +25,24 @@ export default function Home() {
       {/* Site header from the runway export (brand, nav, styling-bag button). */}
       <div className={styles.contents} dangerouslySetInnerHTML={{ __html: runwayHeaderHtml }} />
 
-      <main>
-        <div className={styles.railPage}>
-          <section className={styles.section}>
-            <header className={styles.hero}>
-              <p className={styles.eyebrow}>Everyday essentials · Hoodies &amp; tees</p>
-              <h1 className={styles.title}>Pick it off the rail.</h1>
-            </header>
-            <ProductRail items={products} />
-          </section>
+      {/* Every slider sits in the same centred column, each in the same white card. */}
+      <main className={styles.page}>
+        <section className={`${styles.card} ${styles.section}`}>
+          <header className={styles.hero}>
+            <p className={styles.eyebrow}>Everyday essentials · Hoodies &amp; tees</p>
+            <h1 className={styles.title}>Pick it off the rail.</h1>
+          </header>
+          <ProductRail items={products} />
           <p className={styles.hint}>Hover a piece to see its front, drag the rail, or click for details.</p>
-        </div>
+        </section>
 
         {/* "Try the Look." runway: a vanilla <runway-section> custom element, upgraded by /runway/runway.js. */}
-        <div className={styles.contents} dangerouslySetInnerHTML={{ __html: runwaySectionHtml }} />
+        <div className={styles.card} dangerouslySetInnerHTML={{ __html: runwaySectionHtml }} />
 
         {/* Shoe orbit: shoes ride a curved path; the active one sits large in the middle. */}
-        <ShoeSection />
+        <div className={styles.card}>
+          <ShoeSection />
+        </div>
       </main>
 
       <div className={styles.contents} dangerouslySetInnerHTML={{ __html: runwayBagHtml }} />

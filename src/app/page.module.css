@@ -2,13 +2,27 @@
   display: contents;
 }
 
-.railPage {
+/* One container for every slider: same column width, gutters and gaps. */
+.page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   padding: 24px max(16px, 4vw) 40px;
   background: #fafafa;
   color: #111;
+}
+
+.page > * {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* The white rounded card each slider sits in. `clip` (not `hidden`) keeps sticky children working. */
+.card {
+  border-radius: 18px;
+  background: #fff;
+  overflow: clip;
 }
 
 .section {
@@ -16,8 +30,6 @@
   flex-direction: column;
   gap: 16px;
   padding: 28px max(16px, 3vw) 24px;
-  border-radius: 18px;
-  background: #fff;
 }
 
 
