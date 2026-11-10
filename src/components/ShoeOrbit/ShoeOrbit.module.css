@@ -58,6 +58,7 @@
   letter-spacing: -0.035em;
   text-transform: uppercase;
   text-wrap: balance;
+  will-change: transform;
 }
 
 .price {

@@ -203,24 +203,22 @@ export default function ShoeOrbit({ shoes, onViewDetails, onAddToBag }: Props) {
         <p className={styles.count}>
           {num(active)} / {String(n).padStart(2, "0")}
         </p>
+        {/* Old and new titles share one grid cell, so no layout measuring (popLayout) is needed mid-slide. */}
         <div className={styles.nameMask}>
-          <AnimatePresence mode="popLayout" initial={false} custom={dir}>
+          <AnimatePresence initial={false}>
             <motion.h3
               key={shoe.id}
               className={styles.name}
-              custom={dir}
               initial={reduce ? { opacity: 0 } : { y: dir > 0 ? "105%" : "-105%" }}
               animate={{ y: 0, opacity: 1 }}
               exit={reduce ? { opacity: 0 } : { y: dir > 0 ? "-105%" : "105%" }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
               {shoe.name}
             </motion.h3>
           </AnimatePresence>
         </div>
-        <motion.p key={`p-${shoe.id}`} className={styles.price} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.15 }}>
-          {shoe.price}
-        </motion.p>
+        <p className={styles.price}>{shoe.price}</p>
         {onViewDetails && (
           <button type="button" className={styles.details} onClick={() => onViewDetails(shoe)}>
             View details <span aria-hidden>→</span>
