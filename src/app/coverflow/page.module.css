@@ -1,0 +1,26 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 48px 16px;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at top, #1d1f3a, transparent 60%),
+    #07070d;
+}
+
+.header {
+  text-align: center;
+}
+
+.header h1 {
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.header p {
+  margin-top: 8px;
+  opacity: 0.65;
+}

@@ -1,0 +1,167 @@
+.root {
+  --card-w: clamp(180px, 34vw, 320px);
+  --card-h: calc(var(--card-w) * 1.33);
+  width: 100%;
+  user-select: none;
+}
+
+.stage {
+  position: relative;
+  height: calc(var(--card-h) + 80px);
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  touch-action: pan-y; /* let the page scroll vertically, we handle horizontal */
+  cursor: grab;
+  outline: none;
+  border-radius: 16px;
+}
+
+.stage:focus-visible {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+.card {
+  position: absolute;
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: 20px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease,
+    box-shadow 0.6s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  /* soft mirror reflection under each card */
+  -webkit-box-reflect: below 10px
+    linear-gradient(transparent 65%, rgba(255, 255, 255, 0.18));
+  will-change: transform;
+  cursor: pointer;
+}
+
+.dragging .card {
+  transition: none;
+}
+
+.active {
+  cursor: default;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 20px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.active .caption {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.15s;
+}
+
+.caption h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.caption p {
+  margin: 4px 0 0;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.arrow:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+
+.dotActive {
+  width: 24px;
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .caption,
+  .shade {
+    transition: none;
+  }
+}
